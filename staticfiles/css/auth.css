@@ -1,0 +1,147 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #080b12;
+    color: #f1f5f9;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 42px;
+    background: #111722;
+    border: 1px solid #263244;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 35px;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+.login-heading h1 {
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.login-heading p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 9px;
+    color: #cbd5e1;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    background: #0b111c;
+    color: white;
+    outline: none;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #64748b;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    background: #38bdf8;
+    color: #07111c;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+button span {
+    margin-left: 5px;
+}
+
+.message {
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+    font-size: 13px;
+}
+
+.security-note {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.security-note span {
+    margin-right: 5px;
+}
+
+.back-link {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 28px 22px;
+    }
+}
