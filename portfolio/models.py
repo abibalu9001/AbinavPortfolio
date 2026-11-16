@@ -4,7 +4,7 @@ from django.db import models
 
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=15, default='')
     subject = models.CharField(max_length=200)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,7 +30,7 @@ class ServiceRequest(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, default='')
     email = models.EmailField(blank=True)
 
     service_type = models.CharField(
@@ -59,9 +59,9 @@ class ServiceRequest(models.Model):
         default='none'
     )
 
-    country = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, default='')
 
-    state_region = models.CharField(max_length=100)
+    state_region = models.CharField(max_length=100, default='')
 
     district = models.CharField(max_length=100, blank=True)
 

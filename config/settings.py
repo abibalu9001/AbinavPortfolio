@@ -13,9 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY SETTINGS
 # --------------------------------------------------
 
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "CHANGE-THIS-TO-A-NEW-SECRET-KEY-FOR-LOCAL-DEVELOPMENT"
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or (
+    "local-development-only-insecure-key"
 )
 
 DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
@@ -135,12 +134,27 @@ WSGI_APPLICATION = "config.wsgi.application"
 # We will configure PostgreSQL for persistent
 # production data before relying on contact forms.
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+
+import dj_database_url
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
 
 
 # --------------------------------------------------
