@@ -1,0 +1,97 @@
+
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Hackathons | Abinav{% endblock %}
+
+{% block content %}
+
+<section class="hackathons-section">
+    <div class="hackathons-container">
+
+        <!-- Heading -->
+        <div class="section-heading">
+            <p class="section-label">INNOVATION & COLLABORATION</p>
+            <h1>Hack<span>athons</span></h1>
+            <p class="section-subtitle">
+                Turning ideas into practical solutions through teamwork,
+                innovation, experimentation and technology.
+            </p>
+        </div>
+
+<!-- AVANZARE V19.0 -->
+<article class="hackathon-card featured-hackathon">
+
+    <div class="hackathon-card-top">
+        <span class="hackathon-status completed">
+            24-HOUR NATIONAL LEVEL HACKATHON
+        </span>
+        <span class="hackathon-icon">🏆</span>
+    </div>
+
+    <div class="avanzare-layout">
+
+        <!-- Event Photo -->
+        <div class="avanzare-photo">
+            <img src="{% static 'images/avanzare-v19.jpg' %}"
+                 alt="AVANZARE V19.0 Hackathon">
+        </div>
+
+        <!-- Event Information -->
+        <div class="avanzare-information">
+
+            <span class="hackathon-number">01 / FEATURED EVENT</span>
+
+            <h2>AVANZARE V19.0</h2>
+            <h3>24-Hour National Level Hackathon</h3>
+
+            <div class="hackathon-meta">
+                <span>📅 16 – 17 July 2026</span>
+                <span>📍 Kongu Engineering College, Perundurai, Erode</span>
+            </div>
+
+            <div class="hackathon-project">
+                <span class="project-label">TEAM</span>
+                <h3>Data Breakers</h3>
+                <p>
+                    Collaborating as a team to develop innovative
+                    technology-driven solutions within a 24-hour
+                    hackathon environment.
+                </p>
+            </div>
+
+            <div class="hackathon-team">
+                <h3>Team Members</h3>
+
+                <div class="team-list">
+                    <a href="https://www.linkedin.com/in/ela-maran-804667383/"
+                       target="_blank" rel="noopener noreferrer">
+                        B Elamaran ↗
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/haresh-muralimohan/"
+                       target="_blank" rel="noopener noreferrer">
+                        Haresh Muralimohan ↗
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+        <!-- Closing -->
+        <div class="hackathon-closing">
+            <p class="section-label">BUILD · COLLABORATE · INNOVATE</p>
+            <h2>Ideas become solutions when <span>we build together.</span></h2>
+            <p>
+                Every hackathon is an opportunity to learn new technologies,
+                work with talented people and solve meaningful problems.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

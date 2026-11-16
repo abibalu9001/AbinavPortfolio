@@ -1,0 +1,158 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Requests | Abinav</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="brand">AB<span>.</span></div>
+
+        <div class="sidebar-label">MANAGEMENT</div>
+
+        <a href="{% url 'contact_dashboard' %}" class="nav-item">
+            Messages
+        </a>
+
+        <a href="{% url 'service_requests_dashboard' %}" class="nav-item active">
+            Service Requests
+        </a>
+
+        <div class="sidebar-bottom">
+            <a href="/" class="nav-item">View Portfolio</a>
+
+            <form method="POST" action="{% url 'custom_logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Service Requests</h1>
+                <p>Manage customer enquiries and project requests.</p>
+            </div>
+
+            <div class="profile">
+                <div class="avatar">AB</div>
+                <span>Abinav</span>
+            </div>
+        </header>
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <div>
+                    <p>Total Requests</p>
+                    <h2>{{ total_requests }}</h2>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <p>Unread Requests</p>
+                    <h2>{{ unread_requests }}</h2>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="messages-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Customer Enquiries</h2>
+                    <p>Service requests submitted through your portfolio.</p>
+                </div>
+
+                <form method="GET" class="search-box">
+                    <input
+                        type="text"
+                        name="q"
+                        value="{{ query }}"
+                        placeholder="Search enquiries..."
+                    >
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CUSTOMER</th>
+                            <th>SERVICE</th>
+                            <th>PHONE</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in service_requests %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.name }}</strong>
+                                <small>{{ item.email }}</small>
+                            </td>
+
+                            <td>{{ item.get_service_type_display }}</td>
+
+                            <td>{{ item.phone }}</td>
+
+                            <td>{{ item.created_at|date:"d M Y" }}</td>
+
+                            <td>
+                                {% if item.is_read %}
+                                    <span style="color:#34d399;">Read</span>
+                                {% else %}
+                                    <span style="color:#fbbf24;">Unread</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="empty">
+                                No service requests found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if page_obj.has_other_pages %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+                {% if page_obj.has_next %}
+                    <a href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </section>
+
+    </main>
+</div>
+
+</body>
+</html>

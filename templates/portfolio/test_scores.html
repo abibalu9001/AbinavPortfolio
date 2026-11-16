@@ -1,0 +1,90 @@
+
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Test Scores | Abinav{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/test_scores.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="scores-section">
+
+    <div class="scores-heading">
+        <span class="scores-label">ACADEMIC PERFORMANCE</span>
+        <h1>Test <span>Scores</span></h1>
+        <p>
+            A record of my performance in national-level entrance examinations
+            and academic assessments.
+        </p>
+    </div>
+
+    <div class="scores-grid">
+
+        <div class="score-card">
+            <span class="score-category">Engineering Entrance</span>
+            <h2>Amrita Engineering Entrance Examination</h2>
+            <div class="score-value">92.6 <small>Percentile</small></div>
+            <p>April 2025</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Engineering Entrance</span>
+            <h2>Amrita Engineering Entrance Examination</h2>
+            <div class="score-value">86.6 <small>Percentile</small></div>
+            <p>February 2025</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">National Entrance</span>
+            <h2>Joint Entrance Examination (JEE) Mains</h2>
+            <div class="score-value">86.2 <small>Percentile</small></div>
+            <p>April 2025</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">National Entrance</span>
+            <h2>Joint Entrance Examination (JEE) Mains</h2>
+            <div class="score-value">81.2 <small>Percentile</small></div>
+            <p>January 2023</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Medical Entrance</span>
+            <h2>National Eligibility Cum Entrance Test (NEET)</h2>
+            <div class="score-value">522/720</div>
+            <p>May 2024</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Medical Entrance</span>
+            <h2>National Eligibility Cum Entrance Test (NEET)</h2>
+            <div class="score-value">307/720</div>
+            <p>May 2023</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Engineering Entrance</span>
+            <h2>Vellore Institute of Technology Engineering Entrance Examination</h2>
+            <div class="score-value">1,01,380 <small>Rank</small></div>
+            <p>March 2025</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Board Examination</span>
+            <h2>CBSE 12th Board Examination</h2>
+            <div class="score-value">77.6%</div>
+            <p>April 2023</p>
+        </div>
+
+        <div class="score-card">
+            <span class="score-category">Board Examination</span>
+            <h2>CBSE 12th Board Examination</h2>
+            <div class="score-value">86.6%</div>
+            <p>May 2020</p>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

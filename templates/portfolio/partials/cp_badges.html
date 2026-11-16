@@ -1,0 +1,15 @@
+
+{% if badges %}
+<div class="cp-badge-list">
+    {% for badge in badges %}
+    <span class="cp-badge">
+        {% if badge.icon %}
+        <img src="{{ badge.icon }}" alt="" loading="lazy">
+        {% endif %}
+        {{ badge.name }}
+    </span>
+    {% endfor %}
+</div>
+{% else %}
+<p class="cp-muted">No badge details available.</p>
+{% endif %}

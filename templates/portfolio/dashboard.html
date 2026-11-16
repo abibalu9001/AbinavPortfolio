@@ -1,0 +1,104 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=2">
+{% endblock %}
+{% block title %}Admin Dashboard | Abinav{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p>Manage your portfolio enquiries and messages.</p>
+        </div>
+        <a href="{% url 'home' %}" class="dashboard-home-btn">
+            View Portfolio
+        </a>
+    </div>
+
+    <!-- Statistics -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>{{ total_messages }}</h3>
+            <p>Total Messages</p>
+            <small>{{ unread_messages }} unread</small>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ total_requests }}</h3>
+            <p>Service Requests</p>
+            <small>{{ unread_requests }} unread</small>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <form method="GET" class="dashboard-search">
+        <input
+            type="text"
+            name="q"
+            value="{{ q }}"
+            placeholder="Search messages and service requests..."
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Contact Messages -->
+    <section class="dashboard-section" id="messages">
+        <h2>Contact Messages</h2>
+
+        {% for item in contact_messages %}
+        <div class="dashboard-item">
+            <div>
+                <h3>{{ item.subject }}</h3>
+                <p><strong>{{ item.name }}</strong> · {{ item.email }}</p>
+                <small>{{ item.created_at|date:"d M Y, h:i A" }}</small>
+                <p>{{ item.message|truncatewords:25 }}</p>
+                {% if item.is_read %}
+                    <span class="status-read">Read</span>
+                {% else %}
+                    <span class="status-unread">Unread</span>
+                {% endif %}
+            </div>
+
+            <div class="item-actions">
+                <a href="{% url 'view_message' item.pk %}">View</a>
+                <a href="{% url 'delete_message' item.pk %}"
+                   onclick="return confirm('Delete this message?')">
+                    Delete
+                </a>
+            </div>
+        </div>
+        {% empty %}
+            <p>No contact messages found.</p>
+        {% endfor %}
+    </section>
+
+    <!-- Service Requests -->
+    <section class="dashboard-section" id="requests">
+        <h2>Service Requests</h2>
+
+        {% for item in service_requests %}
+        <div class="dashboard-item">
+            <div>
+                <h3>{{ item.get_service_type_display }}</h3>
+                <p><strong>{{ item.name }}</strong> · {{ item.email }}</p>
+                <p>Phone: {{ item.phone }}</p>
+                <small>{{ item.created_at|date:"d M Y, h:i A" }}</small>
+                <p>{{ item.description|truncatewords:30 }}</p>
+                {% if item.is_read %}
+                    <span class="status-read">Read</span>
+                {% else %}
+                    <span class="status-unread">Unread</span>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+            <p>No service requests found.</p>
+        {% endfor %}
+    </section>
+
+</div>
+{% endblock %}

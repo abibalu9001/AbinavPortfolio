@@ -1,0 +1,220 @@
+
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Competitive Programming | Abinav{% endblock %}
+
+{% block content %}
+<section class="cp-section">
+<div class="cp-container">
+
+    <div class="cp-heading">
+        <p class="cp-label">ABINAV / ACHIEVEMENTS</p>
+        <h1>Competitive Programming</h1>
+        <p>My coding journey across different programming platforms.</p>
+    </div>
+
+    <div class="cp-platform-grid">
+
+    {% for platform, data in platform_data.items %}
+    <article class="cp-card">
+
+        <div class="cp-card-header">
+            <div>
+                <h2>
+                    {% if platform == 'leetcode' %}LeetCode
+                    {% elif platform == 'codeforces' %}Codeforces
+                    {% elif platform == 'codechef' %}CodeChef
+                    {% elif platform == 'hackerrank' %}HackerRank
+                    {% elif platform == 'skillrack' %}Skillrack
+                    {% endif %}
+                </h2>
+                <span class="cp-username">{{ data.username }}</span>
+            </div>
+
+            <span class="cp-status">
+                {% if data.status == 'success' %}Connected
+                {% else %}Unavailable{% endif %}
+            </span>
+        </div>
+
+        {% if data.status == 'success' %}
+
+        <!-- LEETCODE -->
+        {% if platform == 'leetcode' %}
+
+        <div class="cp-main-stat">
+            <span class="cp-stat-number">{{ data.total_solved }}</span>
+            <span class="cp-stat-label">Problems Solved</span>
+        </div>
+
+        <div class="cp-difficulty">
+            <div><strong>{{ data.easy }}</strong><span>Easy</span></div>
+            <div><strong>{{ data.medium }}</strong><span>Medium</span></div>
+            <div><strong>{{ data.hard }}</strong><span>Hard</span></div>
+        </div>
+
+        <div class="cp-metrics">
+            <div class="cp-metric">
+                <span>Contest Rating</span>
+                <strong>{{ data.contest_rating|default_if_none:"N/A" }}</strong>
+            </div>
+            <div class="cp-metric">
+                <span>Active Days</span>
+                <strong>{{ data.active_days|default_if_none:"N/A" }}</strong>
+            </div>
+        </div>
+
+        <div class="cp-badges">
+            <h3>LeetCode Badges ({{ data.badge_count }})</h3>
+            {% include "portfolio/partials/cp_badges.html" with badges=data.badges %}
+        </div>
+
+{% elif platform == 'codeforces' %}
+
+<div class="cp-main-stat">
+    <span class="cp-stat-number">
+        {{ data.total_solved|default_if_none:"N/A" }}
+    </span>
+    <span class="cp-stat-label">Problems Solved</span>
+</div>
+
+<div class="cp-metrics">
+    <div class="cp-metric">
+        <span>Current Rating</span>
+        <strong>
+            {% if data.contest_rating %}
+                {{ data.contest_rating }}
+            {% else %}
+                Unrated
+            {% endif %}
+        </strong>
+    </div>
+
+    <div class="cp-metric">
+        <span>Maximum Rating</span>
+        <strong>{{ data.max_rating|default_if_none:"N/A" }}</strong>
+    </div>
+
+    <div class="cp-metric">
+        <span>Current Rank</span>
+        <strong>{{ data.rank|default_if_none:"Unrated" }}</strong>
+    </div>
+
+    <div class="cp-metric">
+        <span>Maximum Rank</span>
+        <strong>{{ data.max_rank|default_if_none:"N/A" }}</strong>
+    </div>
+
+    <div class="cp-metric">
+        <span>Contests Participated</span>
+        <strong>{{ data.contests_participated|default_if_none:"N/A" }}</strong>
+    </div>
+
+    <div class="cp-metric">
+        <span>Active Days</span>
+        <strong>{{ data.active_days|default:"N/A" }}</strong>
+    </div>
+</div>
+
+        <!-- CODECHEF -->
+        {% elif platform == 'codechef' %}
+
+        <div class="cp-main-stat">
+            <span class="cp-stat-number">{{ data.total_solved|default_if_none:"N/A" }}</span>
+            <span class="cp-stat-label">Problems Solved</span>
+        </div>
+
+        <div class="cp-metrics">
+            <div class="cp-metric">
+                <span>Contest Rating</span>
+                <strong>{{ data.contest_rating|default_if_none:"Unrated" }}</strong>
+            </div>
+            <div class="cp-metric">
+                <span>Active Days</span>
+                <strong>{{ data.active_days|default_if_none:"N/A" }}</strong>
+            </div>
+        </div>
+
+        <div class="cp-badges">
+            <h3>CodeChef Badges</h3>
+            {% include "portfolio/partials/cp_badges.html" with badges=data.badges %}
+        </div>
+
+{% elif platform == 'hackerrank' %}
+
+<div class="cp-hackerrank">
+    <h3>Language Proficiency</h3>
+
+    <div class="cp-hr-badges">
+        {% for badge in data.badges %}
+        <div class="cp-hr-badge">
+            <div class="cp-hr-badge-icon">
+                {% if badge.name == 'Python' %}🐍
+                {% elif badge.name == 'C++' %}💻
+                {% else %}🏅{% endif %}
+            </div>
+
+            <div class="cp-hr-badge-info">
+                <strong>{{ badge.name }}</strong>
+                <span>
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= badge.stars %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if data.certifications %}
+    <h3>Certifications</h3>
+    {% for certificate in data.certifications %}
+        <p>{{ certificate.name }}</p>
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+        <!-- SKILLRACK -->
+        {% elif platform == 'skillrack' %}
+
+        <div class="cp-main-stat">
+            <span class="cp-stat-number">{{ data.total_solved|default_if_none:"N/A" }}</span>
+            <span class="cp-stat-label">Programs Solved</span>
+        </div>
+
+        <div class="cp-metrics">
+            <div class="cp-metric">
+                <span>Programming Rank</span>
+                <strong>{{ data.rank|default_if_none:"N/A" }}</strong>
+            </div>
+            <div class="cp-metric">
+                <span>Valid Until</span>
+                <strong>31 May 2029</strong>
+            </div>
+        </div>
+
+        
+        {% endif %}
+
+        <a class="cp-profile-link"
+           href="{{ data.profile_url|default:'#' }}"
+           target="_blank" rel="noopener noreferrer">
+            View Profile ↗
+        </a>
+
+        {% else %}
+        <p class="cp-error">Unable to retrieve profile data.</p>
+        {% endif %}
+
+    </article>
+    {% endfor %}
+
+    </div>
+</div>
+</section>
+{% endblock %}

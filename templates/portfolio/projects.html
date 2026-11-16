@@ -1,0 +1,128 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Projects | Abinav{% endblock %}
+
+{% block content %}
+<section class="projects-page">
+  <div class="projects-heading">
+    <span class="section-tag">MY WORK &amp; CREATIONS</span>
+    <h1>Featured <span>Projects</span></h1>
+    <p>A collection of applications, intelligent systems and technology-driven solutions I have developed.</p>
+  </div>
+
+  <div class="projects-grid">
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/heartvision.webp' %}" alt="HeartVision AI application">
+        <span class="project-category">Healthcare AI</span>
+      </div>
+      <div class="project-content">
+        <h2>HeartVision AI</h2>
+        <p class="project-subtitle">Heart Disease Risk Prediction</p>
+        <p>Django and Machine Learning healthcare application that analyzes patient health parameters and predicts heart disease risk through probability-based assessment. Includes automated preprocessing, interactive dashboards and prediction reports.</p>
+        <div class="tech-stack"><span>Python</span><span>Django</span><span>Scikit-learn</span><span>Pandas</span><span>NumPy</span><span>SQLite</span></div>
+        <a class="project-link" href="https://heartvision.onrender.com/" target="_blank" rel="noopener noreferrer">Visit Live Project ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/flockvision.webp' %}" alt="FlockVision poultry analytics application">
+        <span class="project-category">Agriculture AI</span>
+      </div>
+      <div class="project-content">
+        <h2>FlockVision AI</h2>
+        <p class="project-subtitle">Poultry Farm Analytics</p>
+        <p>A Django and Machine Learning platform for poultry farmers, featuring weight prediction, disease-risk assessment, farm health scoring, feed and water monitoring, mortality tracking, profit prediction and AI-powered recommendations.</p>
+        <div class="tech-stack"><span>Python</span><span>Django</span><span>Scikit-learn</span><span>Pandas</span><span>Chart.js</span><span>SQLite</span></div>
+        <a class="project-link" href="https://flockvision.onrender.com/predict/" target="_blank" rel="noopener noreferrer">Visit Live Project ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/taxonlens.webp' %}" alt="TaxonLens organism identification application">
+        <span class="project-category">Generative AI</span>
+      </div>
+      <div class="project-content">
+        <h2>TaxonLens</h2>
+        <p class="project-subtitle">AI Organism Identification</p>
+        <p>Identifies plants and animals from uploaded images or live camera input using Google Gemini AI. Provides scientific, family and Tamil names with Wikipedia integration and identification history.</p>
+        <div class="tech-stack"><span>Python</span><span>Django</span><span>Gemini API</span><span>PostgreSQL</span><span>JavaScript</span></div>
+        <a class="project-link" href="https://taxonlens.onrender.com/" target="_blank" rel="noopener noreferrer">Visit Live Project ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/blood_group_predictor.webp' %}" alt="Blood Group Predictor application">
+        <span class="project-category">Healthcare</span>
+      </div>
+      <div class="project-content">
+        <h2>Blood Group Predictor</h2>
+        <p class="project-subtitle">Genetic Inheritance Calculator</p>
+        <p>Predicts possible child blood groups from parental ABO blood groups and Rh factors using genetic inheritance rules, with interactive forms and instant results.</p>
+        <div class="tech-stack"><span>Python</span><span>Django</span><span>SQLite</span><span>JavaScript</span><span>Bootstrap</span></div>
+        <a class="project-link" href="https://blood-group-detector-7nls.onrender.com/" target="_blank" rel="noopener noreferrer">Visit Live Project ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/viruksha_avenue.webp' %}" alt="Viruksha Avenue real estate website">
+        <span class="project-category">Web Development</span>
+      </div>
+      <div class="project-content">
+        <h2>Viruksha Avenue</h2>
+        <p class="project-subtitle">Real Estate Marketing Website</p>
+        <p>A real-estate marketing website designed to digitally showcase properties and provide visitors with an engaging property browsing experience.</p>
+        <div class="tech-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+        <a class="project-link" href="https://68525973360a90ddedd6dcc8--stalwart-sherbet-34ff91.netlify.app/" target="_blank" rel="noopener noreferrer">Visit Live Project ↗</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/animal_mystery.webp' %}" alt="Animal Mystery AI guessing game">
+        <span class="project-category">AI Game</span>
+      </div>
+      <div class="project-content">
+        <h2>Animal Mystery</h2>
+        <p class="project-subtitle">AI-Powered Animal Guessing Game</p>
+        <p>An interactive Django game that identifies animals through intelligent Yes/No questions. Includes authentication, Gemini AI integration, dynamic datasets, real-time scoring, player analytics, monthly achievements, animations and sound effects.</p>
+        <div class="tech-stack"><span>Python</span><span>Django</span><span>Gemini API</span><span>SQLite</span><span>JavaScript</span></div>
+        <span class="project-status">Project showcase</span>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/kadai_king.webp' %}" alt="Kadai King smart billing and inventory system">
+        <span class="project-category">Business Application</span>
+      </div>
+      <div class="project-content">
+        <h2>Kadai King</h2>
+        <p class="project-subtitle">Smart Billing &amp; Inventory System</p>
+        <p>A billing and inventory application for small grocery stores to large retail businesses. Features WhatsApp customer notifications, QR-code payments with email OTP protection, Tamil UI, application lock, daily and monthly reports, and stock and price management.</p>
+        <div class="tech-stack"><span>Python</span><span>Tkinter</span><span>HTML</span><span>CSS</span><span>MySQL</span><span>QR Code</span></div>
+        <span class="project-status">Project showcase</span>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="project-image">
+        <img src="{% static 'images/ai_translator_headphones.webp' %}" alt="AI Translator Headphones concept">
+        <span class="project-category">IoT &amp; Hardware</span>
+      </div>
+      <div class="project-content">
+        <h2>AI Translator Headphones</h2>
+        <p class="project-subtitle">Real-Time Multilingual Communication</p>
+        <p>An AI-powered wearable translation system that captures speech through a digital microphone, processes it using speech recognition, translates conversations and delivers translated audio through headphones.</p>
+        <div class="tech-stack"><span>ESP32</span><span>Arduino C/C++</span><span>INMP441</span><span>MAX98357A</span><span>Python</span><span>Faster-Whisper</span><span>DSP</span></div>
+        <span class="project-status">Hardware project showcase</span>
+      </div>
+    </article>
+  </div>
+</section>
+{% endblock %}

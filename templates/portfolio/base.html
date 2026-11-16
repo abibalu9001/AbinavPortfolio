@@ -1,0 +1,98 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abinav Balasubbiramaniam - AI & Data Science Developer">
+
+    <title>{% block title %}Abinav | Portfolio{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-container">
+
+        <!-- BRAND -->
+        <a href="{% url 'home' %}" class="brand">
+            <div class="brand-avatar">AB</div>
+            <div class="brand-info">
+                <h3>ABINAV</h3>
+                <p>Developer & Creator</p>
+            </div>
+        </a>
+
+        <!-- SINGLE HAMBURGER MENU -->
+        <div class="menu-wrapper">
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    type="button"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+            <!-- DROPDOWN -->
+            <nav class="nav-dropdown" id="navLinks">
+
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'description' %}">Description</a>
+                <a href="{% url 'services' %}">Services</a>
+                <a href="{% url 'projects' %}">Projects</a>
+                <a href="{% url 'experience' %}">Experience</a>
+                <a href="{% url 'education' %}">Education</a>
+                <a href="{% url 'test_scores' %}">Test Scores</a>
+                <a href="{% url 'certifications' %}">Certifications</a>
+                <a href="{% url 'languages' %}">Languages</a>
+                <a href="{% url 'skills' %}">Skills</a>
+                <a href="{% url 'hackathons' %}">Hackathons</a>
+                <a href="{% url 'competitive_programming' %}">
+                    Competitive Programming
+                </a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'custom_login' %}" class="admin-link">
+    <span>🔒</span> Admin
+</a>
+
+            </nav>
+
+        </div>
+
+    </div>
+</header>
+
+<main>
+
+    {% if messages %}
+        <div class="portfolio-messages">
+            {% for message in messages %}
+                <p class="success-message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 Abinav Balasubbiramaniam. All Rights Reserved.</p>
+    <p>Designed & Developed with Django and ❤️</p>
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

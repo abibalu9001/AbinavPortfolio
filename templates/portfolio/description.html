@@ -1,0 +1,231 @@
+
+{% extends 'portfolio/base.html' %}
+
+{% block title %}About Me | Abinav{% endblock %}
+
+{% block content %}
+
+<section class="about-page">
+
+    <div class="about-container">
+
+        <!-- PAGE HEADING -->
+        <div class="about-heading">
+
+            <p class="about-label">GET TO KNOW ME</p>
+
+            <h1>
+                About <span>Me</span>
+            </h1>
+
+            <p class="about-subtitle">
+                Discover my journey, interests, ambitions and passion for technology.
+            </p>
+
+        </div>
+
+
+        <!-- MAIN ABOUT CONTENT -->
+        <div class="about-content">
+
+            <!-- INTRODUCTION -->
+            <div class="about-text">
+
+                <span class="about-tag">WHO I AM</span>
+
+                <h2>
+                    Hello, I'm <span>Abinav Balasubbiramaniam</span>
+                </h2>
+
+                <p>
+                    I am an Artificial Intelligence and Data Science undergraduate
+                    at Chennai Institute of Technology, Chennai.
+                </p>
+
+                <p>
+                    I am passionate about Artificial Intelligence, Machine Learning,
+                    Software Development and Mathematical Research. I enjoy exploring
+                    how technology can solve real-world problems and building
+                    practical applications.
+                </p>
+
+                <p>
+                    My interests extend beyond software development into agriculture,
+                    research and emerging technologies. I believe in continuous
+                    learning, experimentation and improving my technical abilities
+                    through consistent practice.
+                </p>
+
+                <p>
+                    I regularly practise Data Structures and Algorithms and
+                    participate in competitive programming to strengthen my
+                    problem-solving skills.
+                </p>
+
+                <p>
+                    My long-term goal is to become a versatile technology professional
+                    capable of developing intelligent, efficient and impactful
+                    solutions.
+                </p>
+
+            </div>
+
+
+            <!-- PERSONAL INFORMATION -->
+            <div class="about-info-card">
+
+                <h3>Personal Overview</h3>
+
+                <div class="info-item">
+                    <span>Full Name</span>
+                    <strong>Abinav Balasubbiramaniam</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Professional Role</span>
+                    <strong>AI & Data Science Developer</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Education</span>
+                    <strong>B.Tech - Artificial Intelligence and Data Science</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Institution</span>
+                    <strong>Chennai Institute of Technology</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Interests</span>
+                    <strong>AI, ML, Programming, Research</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>Hobbies</span>
+                    <strong>Music, Farming and Research</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AREAS OF INTEREST -->
+        <div class="about-interests">
+
+            <h2>My Areas of Interest</h2>
+
+            <div class="interest-grid">
+
+                <div class="interest-card">
+                    <div class="interest-icon">🤖</div>
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        Exploring intelligent systems and
+                        AI-powered applications.
+                    </p>
+                </div>
+
+                <div class="interest-card">
+                    <div class="interest-icon">🧠</div>
+                    <h3>Machine Learning</h3>
+                    <p>
+                        Building predictive models and
+                        data-driven solutions.
+                    </p>
+                </div>
+
+                <div class="interest-card">
+                    <div class="interest-icon">💻</div>
+                    <h3>Software Development</h3>
+                    <p>
+                        Developing practical applications
+                        using modern technologies.
+                    </p>
+                </div>
+
+                <div class="interest-card">
+                    <div class="interest-icon">📊</div>
+                    <h3>Mathematical Research</h3>
+                    <p>
+                        Exploring mathematical concepts
+                        and analytical problem-solving.
+                    </p>
+                </div>
+
+                <div class="interest-card">
+                    <div class="interest-icon">🌱</div>
+                    <h3>Agriculture</h3>
+                    <p>
+                        Exploring technology-driven
+                        agricultural innovations.
+                    </p>
+                </div>
+
+                <div class="interest-card">
+                    <div class="interest-icon">⚡</div>
+                    <h3>Emerging Technologies</h3>
+                    <p>
+                        Learning about IoT, hardware
+                        and innovative technologies.
+                    </p>
+                </div>
+
+<!-- Medicine -->
+<div class="interest-card">
+    <div class="interest-icon">🩺</div>
+    <h3>Medicine</h3>
+    <p>
+        Exploring medical sciences, human health,
+        diseases and healthcare innovations.
+    </p>
+</div>
+
+<!-- Taxonomy -->
+<div class="interest-card">
+    <div class="interest-icon">🧬</div>
+    <h3>Taxonomy</h3>
+    <p>
+        Studying the classification, identification
+        and scientific naming of organisms.
+    </p>
+</div>
+
+<!-- Cartography -->
+<div class="interest-card">
+    <div class="interest-icon">🌍</div>
+    <h3>Cartography</h3>
+    <p>
+        Exploring map-making, geographical data,
+        spatial analysis and geographic visualization.
+    </p>
+</div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT CALL TO ACTION -->
+        <div class="about-cta">
+
+            <h2>Let's Build Something Together</h2>
+
+            <p>
+                Have an idea, opportunity or interesting project?
+                I'd love to connect and collaborate.
+            </p>
+
+            <a href="{% url 'contact' %}" class="about-contact-btn">
+                Contact Me →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,164 @@
+
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Education | Abinav{% endblock %}
+
+{% block content %}
+
+<section class="education-section page-section">
+    <div class="education-container">
+
+        <!-- Page Heading -->
+        <div class="section-heading">
+            <p class="section-label">ABINAV / ACADEMIC JOURNEY</p>
+
+            <h2>My <span>Education</span></h2>
+
+            <p class="section-subtitle">
+                My academic journey, qualifications and achievements
+                throughout my educational career.
+            </p>
+        </div>
+
+        <!-- Education Cards -->
+        <div class="education-list">
+
+            <!-- 1. Chennai Institute of Technology -->
+            <div class="education-card">
+
+                <div class="education-date">
+                    <span>OCT 2025 – OCT 2029</span>
+                    <span class="education-status">Currently Pursuing</span>
+                </div>
+
+                <div class="education-logo">
+                    <img src="{% static 'images/cit-logo.png' %}"
+                         alt="Chennai Institute of Technology Logo">
+                </div>
+
+                <div class="education-details">
+
+                    <span class="education-level">UNDERGRADUATE</span>
+
+                    <h3>Bachelor of Technology</h3>
+
+                    <h4>Artificial Intelligence and Data Science</h4>
+
+                    <p class="education-institution">
+                        Chennai Institute of Technology, Chennai
+                    </p>
+
+                    <div class="education-score">
+                        <span>CGPA</span>
+                        <strong>8.02</strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 2. Green Park Coaching Centre -->
+            <div class="education-card">
+
+                <div class="education-date">
+                    <span>JUN 2023 – JUN 2024</span>
+                    <span class="education-status completed">Completed</span>
+                </div>
+
+                <div class="education-logo">
+                    <img src="{% static 'images/gpcc-logo.png' %}"
+                         alt="Green Park Coaching Centre Logo">
+                </div>
+
+                <div class="education-details">
+
+                    <span class="education-level">
+                        MEDICAL ENTRANCE PREPARATION
+                    </span>
+
+                    <h3>NEET – Medicine</h3>
+
+                    <h4>Medical Entrance Coaching</h4>
+
+                    <p class="education-institution">
+                        Green Park Coaching Centre, Namakkal
+                    </p>
+
+                    <div class="education-score">
+                        <span>NEET Score</span>
+                        <strong>544 / 720</strong>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 3. Sri Chaithanya Techno School -->
+            <div class="education-card">
+
+                <div class="education-date">
+                    <span>APR 2021 – MAY 2023</span>
+                    <span class="education-status completed">Completed</span>
+                </div>
+
+                <div class="education-logo">
+                    <img src="{% static 'images/chaithanya-logo.png' %}"
+                         alt="Sri Chaithanya Educational Institutions Logo">
+                </div>
+
+                <div class="education-details">
+
+                    <span class="education-level">HIGHER SECONDARY</span>
+
+                    <h3>Class XI & XII</h3>
+
+                    <h4>CBSE – Higher Secondary Education</h4>
+
+                    <p class="education-institution">
+                        Sri Chaithanya Techno School, Coimbatore
+                    </p>
+
+                    <div class="education-score">
+                        <span>Board Examination Score</span>
+                        <strong>77.6%</strong>
+                    </div>
+
+                </div>
+            </div>
+<!-- 3. Sri Chaithanya Techno School -->
+            <div class="education-card">
+
+                <div class="education-date">
+                    <span>MAY 2025 – SEP 2025</span>
+                    <span class="education-status completed">Completed</span>
+                </div>
+
+                <div class="education-logo">
+                    <img src="{% static 'images/csc-logo.png' %}"
+                         alt="Sri Chaithanya Educational Institutions Logo">
+                </div>
+
+                <div class="education-details">
+
+                    <span class="education-level">COMPUTER COACHING</span>
+
+                    <h3>Advanced Diploma</h3>
+
+                    <h4>Java Programming</h4>
+
+                    <p class="education-institution">
+                        Computer Software College, Kangeyam
+                    </p>
+
+                    <div class="education-score">
+                        <span>Grade</span>
+                        <strong>A</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

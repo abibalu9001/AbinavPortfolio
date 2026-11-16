@@ -1,0 +1,71 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login | Abinav</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+
+            <div class="logo">AB<span>.</span></div>
+
+            <div class="login-heading">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your private dashboard.</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit">Sign In <span>→</span></button>
+            </form>
+
+            <div class="security-note">
+                <span>🔒</span>
+                Private access · Protected dashboard
+            </div>
+
+            <a href="/" class="back-link">← Back to Portfolio</a>
+
+        </div>
+    </div>
+
+</body>
+</html>

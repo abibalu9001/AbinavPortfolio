@@ -1,0 +1,85 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Details | Abinav</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+<div class="main-content">
+
+    <a href="{% url 'contact_dashboard' %}" class="back-dashboard">
+    <span>←</span> Back to Dashboard
+</a>
+
+    <section class="messages-section" style="margin-top:30px;">
+
+        <h1>Message Details</h1>
+
+        <p style="margin:20px 0;color:#94a3b8;">
+            Received on {{ contact.created_at|date:"d M Y, h:i A" }}
+        </p>
+
+        <hr style="border-color:#263449;">
+
+        <div style="margin-top:25px;line-height:2;">
+            <p><strong>Name:</strong> {{ contact.name }}</p>
+            <p><strong>Email:</strong> {{ contact.email }}</p>
+            <p><strong>Subject:</strong> {{ contact.subject }}</p>
+            <p>
+                <strong>Status:</strong>
+                {% if contact.is_read %}
+                    <span style="color:#34d399;">Read</span>
+                {% else %}
+                    <span style="color:#fbbf24;">Unread</span>
+                {% endif %}
+            </p>
+        </div>
+
+        <h3 style="margin-top:30px;">Message</h3>
+
+        <div style="
+            margin-top:15px;
+            padding:20px;
+            background:#0b111c;
+            border:1px solid #263449;
+            border-radius:10px;
+            line-height:1.8;
+            white-space:pre-wrap;
+        ">{{ contact.message }}</div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:25px;">
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="action-button">
+                    {% if contact.is_read %}
+                        Mark as Unread
+                    {% else %}
+                        Mark as Read
+                    {% endif %}
+                </button>
+            </form>
+
+            <form method="POST"
+                  action="{% url 'delete_message' contact.pk %}"
+                  onsubmit="return confirm('Are you sure you want to permanently delete this message?');">
+                {% csrf_token %}
+                <button type="submit" class="delete-button">
+                    Delete Message
+                </button>
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

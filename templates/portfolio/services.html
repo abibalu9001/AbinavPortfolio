@@ -1,0 +1,359 @@
+
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Services | Abinav{% endblock %}
+
+{% block content %}
+
+<section class="services-page">
+
+    <div class="services-container">
+
+        <!-- =================================
+             1. PAGE INTRODUCTION
+        ================================== -->
+
+        <div class="services-heading">
+            <span class="services-label">WHAT I CAN DO FOR YOU</span>
+
+            <h1>
+                My <span>Services</span>
+            </h1>
+
+            <p>
+                Turning ideas into practical solutions through technology,
+                creativity and innovation.
+            </p>
+        </div>
+
+
+        <!-- =================================
+             2. INTRODUCTION ABOUT SERVICES
+        ================================== -->
+
+        <div class="services-intro">
+
+            <div class="services-intro-content">
+
+                <span class="services-intro-label">
+                    WHAT I OFFER
+                </span>
+
+                <h2>
+                    Technology, Innovation &
+                    <span>Practical Solutions</span>
+                </h2>
+
+                <p>
+                    I offer technology-oriented development and
+                    problem-solving services across Artificial Intelligence,
+                    Machine Learning, Web Development, Data Analytics
+                    and emerging technologies.
+                </p>
+
+                <p>
+                    My approach focuses on understanding requirements,
+                    exploring suitable technologies and developing
+                    practical solutions that address real-world problems.
+                </p>
+
+                <p>
+                    Whether you need an intelligent application,
+                    a dynamic website, data-driven insights or
+                    technical guidance, I would be happy to
+                    discuss your requirements.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             3. SERVICES OFFERED
+        ================================== -->
+
+        <div class="services-section-heading">
+
+            <span class="services-label">MY EXPERTISE</span>
+
+            <h2>Services I <span>Provide</span></h2>
+
+            <p>
+                Explore the areas where I can help bring your ideas to life.
+            </p>
+
+        </div>
+
+
+        <div class="services-grid">
+
+            <!-- Service 1 -->
+            <div class="service-card">
+
+                <div class="service-icon">🤖</div>
+
+                <span class="service-number">01</span>
+
+                <h2>AI & Machine Learning</h2>
+
+                <p>
+                    Developing intelligent applications, predictive models,
+                    classification systems and machine learning solutions
+                    for real-world problems.
+                </p>
+
+            </div>
+
+
+            <!-- Service 2 -->
+            <div class="service-card">
+
+                <div class="service-icon">💻</div>
+
+                <span class="service-number">02</span>
+
+                <h2>Full-Stack Web Development</h2>
+
+                <p>
+                    Building dynamic, responsive and database-driven
+                    web applications using Python, Django, HTML,
+                    CSS and JavaScript.
+                </p>
+
+            </div>
+
+
+            <!-- Service 3 -->
+            <div class="service-card">
+
+                <div class="service-icon">📊</div>
+
+                <span class="service-number">03</span>
+
+                <h2>Data Analysis & Visualization</h2>
+
+                <p>
+                    Transforming raw data into meaningful insights
+                    through data processing, analysis and
+                    visualization techniques.
+                </p>
+
+            </div>
+
+
+            <!-- Service 4 -->
+            <div class="service-card">
+
+                <div class="service-icon">⚙️</div>
+
+                <span class="service-number">04</span>
+
+                <h2>IoT & Hardware Development</h2>
+
+                <p>
+                    Exploring connected devices, sensor-based systems,
+                    automation and hardware-integrated applications.
+                </p>
+
+            </div>
+
+
+            <!-- Service 5 -->
+            <div class="service-card">
+
+                <div class="service-icon">📐</div>
+
+                <span class="service-number">05</span>
+
+                <h2>Mathematical Research</h2>
+
+                <p>
+                    Mathematical problem-solving, analytical thinking,
+                    computational experiments and research exploration.
+                </p>
+
+            </div>
+
+
+            <!-- Service 6 -->
+            <div class="service-card">
+
+                <div class="service-icon">💡</div>
+
+                <span class="service-number">06</span>
+
+                <h2>Technical Consultation</h2>
+
+                <p>
+                    Discussing project ideas, technology choices,
+                    implementation approaches and technical solutions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             4. SELECTED PROJECT SHOWCASE
+        ================================== -->
+
+
+<!-- SELECTED PROJECTS LINK -->
+<section class="services-projects">
+
+    <div class="services-projects-heading">
+
+        <span class="services-label">MY WORK</span>
+
+        <h2>
+            Explore My <span>Projects</span>
+        </h2>
+
+        <p>
+            Interested in seeing what I have built?
+            Explore my projects, technologies and implementations.
+        </p>
+
+    </div>
+
+    <div class="projects-navigation-card">
+
+        <div class="projects-navigation-icon">
+            <span>🚀</span>
+        </div>
+
+        <div class="projects-navigation-content">
+            <h3>Discover My Work</h3>
+
+            <p>
+                Explore my AI, Machine Learning, Web Development,
+                Research and other technical projects.
+            </p>
+        </div>
+
+        <a href="{% url 'projects' %}" class="projects-navigation-btn">
+            Explore All Projects →
+        </a>
+
+    </div>
+
+</section>
+
+
+
+        <!-- =================================
+             5. SERVICE ENQUIRY FORM
+        ================================== -->
+
+        
+<section class="service-request-section" id="service-request">
+
+    <div class="section-heading">
+        <span class="section-tag">WORK WITH ME</span>
+        <h2>Request a <span>Service</span></h2>
+        <p>
+            Have a project idea or need technical assistance?
+            Share your requirements and I'll get in touch with you.
+        </p>
+    </div>
+
+    <form action="{% url 'submit_service_request' %}"
+          class="service-request-form"
+          method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="service-name">Your Name *</label>
+            <input type="text" id="service-name" name="name"
+                   maxlength="100" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="service-phone">Contact Number *</label>
+            <input type="tel" id="service-phone" name="phone"
+                   maxlength="20" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="service-email">Email ID</label>
+            <input type="email" id="service-email" name="email"
+                   placeholder="Enter your email address">
+        </div>
+
+        <div class="form-group">
+            <label for="service-type">Type of Service *</label>
+            <select id="service-type" name="service_type" required>
+                <option value="" disabled selected>Select a service</option>
+                <option value="ai_ml">AI & Machine Learning</option>
+                <option value="web">Full-Stack Web Development</option>
+                <option value="data">Data Analysis & Visualization</option>
+                <option value="iot">IoT & Hardware Development</option>
+                <option value="math">Mathematical Research</option>
+                <option value="consultation">Technical Consultation</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="preferred-language">
+                Preferred Language for Communication
+            </label>
+            <select id="preferred-language" name="preferred_language">
+                <option value="none" selected>No preference</option>
+                <option value="ta">Tamil</option>
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+                <option value="ml">Malayalam</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country of Residence *</label>
+            <select id="country" name="country" required>
+                <option value="">Loading countries...</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="state-region">State / Region of Residence *</label>
+            <select id="state-region" name="state_region" required disabled>
+                <option value="">Choose a country first</option>
+            </select>
+        </div>
+
+        <div class="form-group full-width" id="district-group" hidden>
+            <label for="district">District of Residence *</label>
+            <select id="district" name="district" disabled>
+                <option value="">Choose a state first</option>
+            </select>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="service-description">
+                Describe Your Requirements *
+            </label>
+            <textarea id="service-description"
+                      name="description"
+                      maxlength="2000"
+                      placeholder="Briefly explain your project or requirements..."
+                      required rows="6"></textarea>
+        </div>
+
+        <button class="submit-btn" type="submit">
+            Submit Enquiry →
+        </button>
+
+    </form>
+
+</section>
+
+    </div>
+
+</section>
+
+{% endblock %}

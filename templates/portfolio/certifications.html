@@ -1,0 +1,91 @@
+
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Certifications | Abinav{% endblock %}
+
+{% block content %}
+
+<section class="certifications-section">
+
+    <div class="certifications-container">
+
+        <!-- Page Heading -->
+        <div class="section-heading">
+            <p class="section-label">LEARNING & ACHIEVEMENTS</p>
+            <h1>My <span>Certifications</span></h1>
+            <p class="section-subtitle">
+                Professional courses and certifications that reflect
+                my commitment to continuous learning and skill development.
+            </p>
+        </div>
+
+        <!-- Certification Card -->
+        <div class="certification-card">
+
+            <div class="certification-header">
+
+                <img src="{% static 'images/csc-logo.png' %}"
+                     alt="CSC Computer Software College"
+                     class="certification-logo">
+
+                <div>
+                    <span class="certification-category">
+                        PROGRAMMING CERTIFICATION
+                    </span>
+
+                    <h2>Advanced Diploma in Java Programming</h2>
+
+                    <h3>CSC Computer Education</h3>
+                    <p>Kangeyam, Tamil Nadu</p>
+                </div>
+
+            </div>
+
+            <div class="certification-details">
+
+                <div class="certification-info">
+                    <span>Duration</span>
+                    <strong>May 2025 – September 2025</strong>
+                </div>
+
+                <div class="certification-info">
+                    <span>Grade Achieved</span>
+                    <strong class="grade-highlight">A – Excellent</strong>
+                </div>
+
+                <div class="certification-info">
+                    <span>Course Coverage</span>
+                    <strong>C, C++, Java and OOPS</strong>
+                </div>
+
+            </div>
+
+            <div class="certification-skills">
+                <span>C Programming</span>
+                <span>C++</span>
+                <span>Java</span>
+                <span>Object-Oriented Programming</span>
+            </div>
+
+            <!-- Certificate Photograph -->
+            <div class="certificate-preview">
+                <h3>Certificate Preview</h3>
+
+                <a href="{% static 'images/java.png' %}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <img src="{% static 'images/java.png' %}"
+                         alt="Advanced Diploma in Java Programming Certificate">
+                </a>
+
+                <p>Click the certificate to view it in full size.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
