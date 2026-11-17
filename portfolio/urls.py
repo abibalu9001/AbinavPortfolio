@@ -32,4 +32,15 @@ urlpatterns = [
     path('dashboard/message/<int:message_id>/', views.view_message, name='view_message'),
     path('dashboard/delete/<int:message_id>/', views.delete_message, name='delete_message'),
     path('submit-rating/', views.submit_rating, name='submit_rating'),
+    # Service request actions
+    path(
+        'dashboard/service/<int:service_id>/',
+        views.view_service_request,
+        name='view_service_request'
+    ),
+    path(
+        'dashboard/service/delete/<int:service_id>/',
+        views.delete_service_request,
+        name='delete_service_request'
+    ),
 ]

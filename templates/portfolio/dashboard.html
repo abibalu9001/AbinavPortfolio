@@ -1,19 +1,23 @@
+
 {% extends 'portfolio/base.html' %}
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=3">
 {% endblock %}
+
 {% block title %}Admin Dashboard | Abinav{% endblock %}
 
 {% block content %}
 <div class="dashboard-container">
 
+    <!-- Dashboard Header -->
     <div class="dashboard-header">
         <div>
             <h1>Admin Dashboard</h1>
             <p>Manage your portfolio enquiries and messages.</p>
         </div>
+
         <a href="{% url 'home' %}" class="dashboard-home-btn">
             View Portfolio
         </a>
@@ -21,6 +25,7 @@
 
     <!-- Statistics -->
     <div class="dashboard-stats">
+
         <div class="stat-card">
             <h3>{{ total_messages }}</h3>
             <p>Total Messages</p>
@@ -32,6 +37,7 @@
             <p>Service Requests</p>
             <small>{{ unread_requests }} unread</small>
         </div>
+
     </div>
 
     <!-- Search -->
@@ -39,72 +45,209 @@
         <input
             type="text"
             name="q"
-            value="{{ q }}"
+            value="{{ query }}"
             placeholder="Search messages and service requests..."
         >
         <button type="submit">Search</button>
     </form>
 
-    <!-- Contact Messages -->
+
+    <!-- ================================= -->
+    <!-- CONTACT MESSAGES -->
+    <!-- ================================= -->
+
     <section class="dashboard-section" id="messages">
+
         <h2>Contact Messages</h2>
 
         {% for item in contact_messages %}
+
         <div class="dashboard-item">
-            <div>
+
+            <div class="dashboard-item-content">
+
                 <h3>{{ item.subject }}</h3>
-                <p><strong>{{ item.name }}</strong> · {{ item.email }}</p>
-                <small>{{ item.created_at|date:"d M Y, h:i A" }}</small>
-                <p>{{ item.message|truncatewords:25 }}</p>
+
+                <p>
+                    <strong>{{ item.name }}</strong>
+                    · {{ item.phone }}
+                </p>
+
+                <small>
+                    {{ item.created_at|date:"d M Y, h:i A" }}
+                </small>
+
+                <p>
+                    {{ item.message|truncatewords:25 }}
+                </p>
+
                 {% if item.is_read %}
                     <span class="status-read">Read</span>
                 {% else %}
                     <span class="status-unread">Unread</span>
                 {% endif %}
+
             </div>
 
+            <!-- Actions -->
+            <div class="dashboard-actions">
 
-<form method="POST"
-      action="{% url 'delete_message' item.id %}"
-      onsubmit="return confirm('Are you sure you want to delete this message?');">
+                <a
+                    href="{% url 'view_message' item.id %}"
+                    class="view-btn">
+                    View
+                </a>
 
-    {% csrf_token %}
+                <form
+                    method="POST"
+                    action="{% url 'delete_message' item.id %}"
+                    onsubmit="return confirm('Are you sure you want to delete this message?');">
 
-    <button type="submit" class="delete-btn">
-        Delete
-    </button>
+                    {% csrf_token %}
 
-</form>
+                    <button type="submit" class="delete-btn">
+                        Delete
+                    </button>
 
+                </form>
+
+            </div>
 
         </div>
+
         {% empty %}
+
             <p>No contact messages found.</p>
+
         {% endfor %}
+
+        <!-- Contact Message Pagination -->
+        {% if message_page.has_other_pages %}
+
+        <div class="dashboard-pagination">
+
+            {% if message_page.has_previous %}
+                <a href="?message_page={{ message_page.previous_page_number }}&request_page={{ request_page.number }}&q={{ query|urlencode }}">
+                    Previous
+                </a>
+            {% endif %}
+
+            <span>
+                Page {{ message_page.number }} of {{ message_page.paginator.num_pages }}
+            </span>
+
+            {% if message_page.has_next %}
+                <a href="?message_page={{ message_page.next_page_number }}&request_page={{ request_page.number }}&q={{ query|urlencode }}">
+                    Next
+                </a>
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
     </section>
 
-    <!-- Service Requests -->
+
+    <!-- ================================= -->
+    <!-- SERVICE REQUESTS -->
+    <!-- ================================= -->
+
     <section class="dashboard-section" id="requests">
+
         <h2>Service Requests</h2>
 
         {% for item in service_requests %}
+
         <div class="dashboard-item">
-            <div>
+
+            <div class="dashboard-item-content">
+
                 <h3>{{ item.get_service_type_display }}</h3>
-                <p><strong>{{ item.name }}</strong> · {{ item.phone }}</p>
-                <p>Phone: {{ item.phone }}</p>
-                <small>{{ item.created_at|date:"d M Y, h:i A" }}</small>
-                <p>{{ item.description|truncatewords:30 }}</p>
+
+                <p>
+                    <strong>{{ item.name }}</strong>
+                    · {{ item.phone }}
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    {{ item.email|default:"Not provided" }}
+                </p>
+
+                <small>
+                    {{ item.created_at|date:"d M Y, h:i A" }}
+                </small>
+
+                <p>
+                    {{ item.description|truncatewords:30 }}
+                </p>
+
                 {% if item.is_read %}
                     <span class="status-read">Read</span>
                 {% else %}
                     <span class="status-unread">Unread</span>
                 {% endif %}
+
             </div>
+
+            <!-- Actions -->
+            <div class="dashboard-actions">
+
+                <a
+                    href="{% url 'view_service_request' item.id %}"
+                    class="view-btn">
+                    View
+                </a>
+
+                <form
+                    method="POST"
+                    action="{% url 'delete_service_request' item.id %}"
+                    onsubmit="return confirm('Are you sure you want to delete this service request?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="delete-btn">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
+
         {% empty %}
+
             <p>No service requests found.</p>
+
         {% endfor %}
+
+        <!-- Service Request Pagination -->
+        {% if request_page.has_other_pages %}
+
+        <div class="dashboard-pagination">
+
+            {% if request_page.has_previous %}
+                <a href="?message_page={{ message_page.number }}&request_page={{ request_page.previous_page_number }}&q={{ query|urlencode }}">
+                    Previous
+                </a>
+            {% endif %}
+
+            <span>
+                Page {{ request_page.number }} of {{ request_page.paginator.num_pages }}
+            </span>
+
+            {% if request_page.has_next %}
+                <a href="?message_page={{ message_page.number }}&request_page={{ request_page.next_page_number }}&q={{ query|urlencode }}">
+                    Next
+                </a>
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
     </section>
 
 </div>

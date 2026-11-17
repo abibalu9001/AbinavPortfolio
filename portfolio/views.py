@@ -268,6 +268,32 @@ def delete_message(request, message_id):
     return redirect('contact_dashboard')
 
 
+@dashboard_required
+def view_service_request(request, service_id):
+    service = get_object_or_404(ServiceRequest, pk=service_id)
+
+    if not service.is_read:
+        service.is_read = True
+        service.save(update_fields=['is_read'])
+
+    return render(
+        request,
+        'portfolio/service_detail.html',
+        {'service': service}
+    )
+
+
+@dashboard_required
+@require_POST
+def delete_service_request(request, service_id):
+    service = get_object_or_404(ServiceRequest, pk=service_id)
+    service.delete()
+
+    messages.success(request, 'Service request deleted successfully!')
+    return redirect('contact_dashboard')
+
+
+
 # ==========================================
 # LOGOUT ENDPOINT
 # ==========================================
