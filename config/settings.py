@@ -2,6 +2,9 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
+
 # --------------------------------------------------
 # BASE DIRECTORY
 # --------------------------------------------------
@@ -25,13 +28,11 @@ ALLOWED_HOSTS = [
     ".vercel.app",
 ]
 
-# Vercel deployment hostname
 VERCEL_URL = os.environ.get("VERCEL_URL")
 
 if VERCEL_URL:
     ALLOWED_HOSTS.append(VERCEL_URL)
 
-# Additional custom hosts
 EXTRA_ALLOWED_HOSTS = os.environ.get("EXTRA_ALLOWED_HOSTS", "")
 
 if EXTRA_ALLOWED_HOSTS:
@@ -127,15 +128,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 # --------------------------------------------------
-# DATABASE
+# DATABASE - NEON POSTGRESQL
 # --------------------------------------------------
-
-# Temporary SQLite configuration.
-# We will configure PostgreSQL for persistent
-# production data before relying on contact forms.
-
-
-import dj_database_url
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
@@ -155,6 +149,9 @@ else:
         }
     }
 
+# Recommended when using Neon pooled connections
+if DATABASE_URL and "-pooler" in DATABASE_URL:
+    DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 
 
 # --------------------------------------------------
@@ -222,10 +219,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # --------------------------------------------------
-# EMAIL CONFIGURATION
+# EMAIL CONFIGURATION - GMAIL SMTP
 # --------------------------------------------------
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = (
+    "django.core.mail.backends.smtp.EmailBackend"
+)
 
 EMAIL_HOST = "smtp.gmail.com"
 
@@ -233,15 +232,21 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_TIMEOUT = 20
 
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+
+EMAIL_HOST_PASSWORD = os.environ.get(
+    "EMAIL_HOST_PASSWORD", ""
+)
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+SERVER_EMAIL = EMAIL_HOST_USER
+
 CONTACT_NOTIFICATION_EMAIL = os.environ.get(
     "CONTACT_NOTIFICATION_EMAIL",
-    EMAIL_HOST_USER
+    EMAIL_HOST_USER,
 )
 
 
@@ -257,7 +262,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # --------------------------------------------------
 
 if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    SECURE_PROXY_SSL_HEADER = (
+        "HTTP_X_FORWARDED_PROTO",
+        "https",
+    )
 
     SESSION_COOKIE_SECURE = True
 
