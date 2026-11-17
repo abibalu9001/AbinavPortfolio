@@ -736,3 +736,271 @@ footer {
     color: #7dd3fc;
     transform: translateX(-3px);
 }
+
+/* ========================================
+   DASHBOARD CARD POLISH
+   Add-on styles for the existing dashboard
+======================================== */
+
+.dashboard-container {
+    max-width: 1500px;
+    padding-top: 48px;
+    padding-bottom: 55px;
+}
+
+.dashboard-header {
+    margin-bottom: 38px;
+}
+
+.dashboard-header h1 {
+    letter-spacing: -0.7px;
+    font-weight: 800;
+}
+
+.dashboard-header p {
+    line-height: 1.7;
+}
+
+.dashboard-home-btn,
+.dashboard-search button,
+.item-actions a,
+.item-actions button {
+    transition: background .2s ease, border-color .2s ease,
+                color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-stats {
+    grid-template-columns: repeat(2, minmax(220px, 270px));
+    gap: 18px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 125px;
+    padding: 23px 24px;
+    background: linear-gradient(145deg, #121e30, #101827);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: #38bdf8;
+    opacity: .85;
+}
+
+.stat-card h3 {
+    font-size: 32px;
+    letter-spacing: -.5px;
+}
+
+.dashboard-search {
+    margin-bottom: 38px;
+}
+
+.dashboard-search input {
+    min-height: 52px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12);
+}
+
+.dashboard-search input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, .12);
+}
+
+.dashboard-search button {
+    min-height: 52px;
+    padding: 0 27px;
+}
+
+.dashboard-search button:hover,
+.dashboard-home-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(14, 165, 233, .14);
+}
+
+.dashboard-section {
+    padding: 27px 28px;
+    margin-bottom: 30px;
+    background: linear-gradient(145deg, #111b2b, #101827);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .10);
+}
+
+.dashboard-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    letter-spacing: -.25px;
+    margin-bottom: 10px;
+    padding-bottom: 19px;
+}
+
+.dashboard-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 15px 0;
+    padding: 23px 20px;
+    border: 1px solid #263449;
+    border-radius: 11px;
+    background: rgba(8, 15, 27, .38);
+    transition: border-color .2s ease, background .2s ease,
+                transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-item:hover {
+    border-color: rgba(56, 189, 248, .48);
+    background: rgba(19, 39, 59, .58);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .13);
+}
+
+.dashboard-item > div:first-child {
+    flex: 1;
+    min-width: 0;
+}
+
+.dashboard-item h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.dashboard-item p {
+    line-height: 1.75;
+}
+
+.dashboard-item small {
+    color: #7f91aa;
+}
+
+.status-read,
+.status-unread {
+    margin-top: 13px;
+    padding: 6px 12px;
+    letter-spacing: .2px;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+    flex-shrink: 0;
+}
+
+.item-actions a,
+.item-actions button,
+.dashboard-item form button,
+.dashboard-item > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 37px;
+    padding: 9px 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.item-actions a:first-child {
+    background: #172d42;
+    border-color: #203d58;
+    color: #38bdf8;
+}
+
+.item-actions a:first-child:hover {
+    background: #1e405b;
+    border-color: #38bdf8;
+    transform: translateY(-1px);
+}
+
+.item-actions a:last-child,
+.item-actions .delete-button,
+.dashboard-item form button {
+    background: #421e27;
+    border-color: #5a2934;
+    color: #fca5a5;
+}
+
+.item-actions a:last-child:hover,
+.item-actions .delete-button:hover,
+.dashboard-item form button:hover {
+    background: #7f1d1d;
+    border-color: #991b1b;
+    transform: translateY(-1px);
+}
+
+/* Supports the delete form used inside each message card */
+.dashboard-item form {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.dashboard-section > p {
+    padding: 38px 12px;
+    color: #71839d;
+    line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+    .dashboard-container {
+        padding: 28px 16px 40px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        min-width: 0;
+        padding: 18px 16px;
+    }
+
+    .dashboard-section {
+        padding: 20px 15px;
+    }
+
+    .dashboard-item {
+        flex-direction: column;
+        gap: 16px;
+        padding: 19px 16px;
+    }
+
+    .item-actions,
+    .dashboard-item form {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .item-actions a,
+    .item-actions button,
+    .dashboard-item form button {
+        flex: 1;
+    }
+}
+
+@media (max-width: 380px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-search button {
+        width: 100%;
+    }
+}
