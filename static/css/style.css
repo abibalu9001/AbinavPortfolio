@@ -7213,3 +7213,20 @@ body {
         gap: 12px;
     }
 }
+.certificate-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid #00c6d7;
+    border-radius: 8px;
+    color: #00c6d7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.certificate-link:hover {
+    background: #00c6d7;
+    color: #081525;
+}
