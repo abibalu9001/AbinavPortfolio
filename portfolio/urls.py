@@ -31,4 +31,5 @@ urlpatterns = [
     # Contact message actions
     path('dashboard/message/<int:message_id>/', views.view_message, name='view_message'),
     path('dashboard/delete/<int:message_id>/', views.delete_message, name='delete_message'),
+    path('submit-rating/', views.submit_rating, name='submit_rating'),
 ]

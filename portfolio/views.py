@@ -12,15 +12,86 @@ import requests
 
 from portfolio.services.competitive import fetch_all_platforms
 from .models import ContactMessage, ServiceRequest
+from django.db.models import F, Avg
+from .models import ContactMessage, ServiceRequest, SiteStats, SiteRating
+import uuid
 
 
 # ==========================================
 # PUBLIC PORTFOLIO PAGES
 # ==========================================
 
-def home(request):
-    return render(request, 'portfolio/index.html', {'active_page': 'home'})
 
+def home(request):
+    stats, _ = SiteStats.objects.get_or_create(pk=1)
+
+    # Count only once per browser session
+    if not request.COOKIES.get('portfolio_visit_counted'):
+        SiteStats.objects.filter(pk=stats.pk).update(
+            total_visits=F('total_visits') + 1
+        )
+
+    stats.refresh_from_db()
+
+    average_rating = SiteRating.objects.aggregate(
+        average=Avg('rating')
+    )['average'] or 0
+
+    total_ratings = SiteRating.objects.count()
+
+    response = render(request, 'portfolio/index.html', {
+        'active_page': 'home',
+        'total_visits': stats.total_visits,
+        'average_rating': round(average_rating, 1),
+        'total_ratings': total_ratings,
+    })
+
+    # Session cookie: expires when the browser session ends
+    if not request.COOKIES.get('portfolio_visit_counted'):
+        response.set_cookie(
+            'portfolio_visit_counted',
+            '1',
+            httponly=True,
+            samesite='Lax',
+            secure=request.is_secure()
+        )
+
+    return response
+
+@require_POST
+def submit_rating(request):
+    try:
+        rating = int(request.POST.get('rating', 0))
+    except (TypeError, ValueError):
+        return redirect('home')
+
+    if rating < 1 or rating > 5:
+        return redirect('home')
+
+    visitor_key = request.COOKIES.get('portfolio_visitor_id')
+
+    try:
+        visitor_key = uuid.UUID(visitor_key) if visitor_key else uuid.uuid4()
+    except ValueError:
+        visitor_key = uuid.uuid4()
+
+    SiteRating.objects.update_or_create(
+        visitor_key=visitor_key,
+        defaults={'rating': rating}
+    )
+
+    response = redirect('home')
+
+    response.set_cookie(
+        'portfolio_visitor_id',
+        str(visitor_key),
+        max_age=60 * 60 * 24 * 365,
+        httponly=True,
+        samesite='Lax',
+        secure=request.is_secure()
+    )
+
+    return response
 
 def description(request):
     return render(request, 'portfolio/description.html', {'active_page': 'description'})

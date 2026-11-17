@@ -71,3 +71,18 @@ class ServiceRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.get_service_type_display()}"
+
+class SiteStats(models.Model):
+    total_visits = models.PositiveBigIntegerField(default=0)
+
+    def __str__(self):
+        return f"Website Visits: {self.total_visits}"
+
+
+class SiteRating(models.Model):
+    visitor_key = models.UUIDField(unique=True)
+    rating = models.PositiveSmallIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.rating}/5"

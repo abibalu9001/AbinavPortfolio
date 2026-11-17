@@ -63,5 +63,65 @@
         </div>
 
     </div>
+
 </section>
+
+</section>
+
+<!-- Website Statistics -->
+<section class="website-feedback" id="website-feedback">
+    <div class="feedback-container">
+
+        <div class="visitor-stat">
+            <span class="feedback-icon">👁️</span>
+            <h2>{{ total_visits }}</h2>
+            <p>Total Website Visits</p>
+        </div>
+
+        <div class="rating-stat">
+            <span class="feedback-icon">⭐</span>
+            <h2>{{ average_rating|floatformat:1 }} / 5</h2>
+            <p>Average Visitor Rating</p>
+            <p>{{ total_ratings }} Ratings</p>
+
+            <div class="rating-stars">
+                {% for star in "12345" %}
+                    {% if forloop.counter <= average_rating %}
+                        <span class="star filled">★</span>
+                    {% else %}
+                        <span class="star">★</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="give-rating">
+            <h3>How would you rate my portfolio?</h3>
+            <p>Your feedback helps me improve!</p>
+
+            <form method="POST" action="{% url 'submit_rating' %}">
+                {% csrf_token %}
+
+                <div class="star-selection">
+                    {% for star in "54321" %}
+                        <input
+                            type="radio"
+                            id="star{{ star }}"
+                            name="rating"
+                            value="{{ star }}"
+                            required
+                        >
+                        <label for="star{{ star }}">★</label>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="rating-submit">
+                    Submit Rating
+                </button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
 {% endblock %}
