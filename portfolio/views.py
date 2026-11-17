@@ -10,6 +10,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.core.cache import cache
 from portfolio.services.competitive import fetch_all_platforms
+import os
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import ContactMessage, ServiceRequest
 
@@ -88,11 +91,11 @@ def contact_page(request):
 # ADMIN LOGIN
 # ==========================================
 
+
 def custom_login(request):
 
-    # Opening the login page always requires fresh authentication
     if request.method == 'GET':
-        logout(request)
+        request.session.flush()
         return render(request, 'portfolio/login.html')
 
     if request.method == 'POST':
@@ -100,14 +103,20 @@ def custom_login(request):
         username = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
 
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+        correct_username = os.environ.get('DASHBOARD_USERNAME')
+        correct_password = os.environ.get('DASHBOARD_PASSWORD')
 
-        if user and user.is_active and user.is_staff:
-            login(request, user)
+        if not correct_username or not correct_password:
+            messages.error(request, 'Login is temporarily unavailable.')
+            return render(request, 'portfolio/login.html')
+
+        if (
+            username == correct_username
+            and password == correct_password
+        ):
+            request.session['dashboard_authenticated'] = True
+            request.session.set_expiry(1800)
+
             return redirect('contact_dashboard')
 
         messages.error(request, 'Invalid username or password.')
@@ -115,11 +124,19 @@ def custom_login(request):
     return render(request, 'portfolio/login.html')
 
 
+
 # ==========================================
 # COMBINED ADMIN DASHBOARD
 # ==========================================
+def dashboard_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.session.get('dashboard_authenticated'):
+            return redirect('custom_login')
+        return view_func(request, *args, **kwargs)
 
-@login_required(login_url='custom_login')
+    return wrapper
+
+@dashboard_required
 def contact_dashboard(request):
 
     if not request.user.is_staff or not request.user.is_active:
@@ -226,10 +243,10 @@ def delete_message(request, message_id):
 # LOGOUT ENDPOINT (NOT DISPLAYED IN MENU)
 # ==========================================
 
-@login_required(login_url='custom_login')
+@dashboard_required
 @require_POST
 def custom_logout(request):
-    logout(request)
+    request.session.flush()
     return redirect('custom_login')
 
 
