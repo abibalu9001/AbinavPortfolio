@@ -10,7 +10,7 @@ dependencies = [
     "requests",
     "dj-database-url",
     "psycopg2-binary",
+    "beautifulsoup4",
 ]
-
 [tool.vercel.scripts]
 build = 'DATABASE_URL="$DATABASE_URL_UNPOOLED" python manage.py migrate --noinput'
