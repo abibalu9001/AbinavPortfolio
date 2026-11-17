@@ -192,7 +192,7 @@ def contact_dashboard(request):
 
         contact_messages = contact_messages.filter(
             Q(name__icontains=query) |
-            Q(email__icontains=query) |
+            Q(phone__icontains=query) |
             Q(subject__icontains=query) |
             Q(message__icontains=query)
         )
@@ -328,7 +328,7 @@ def send_contact_notification(contact):
 You have received a new message through your portfolio.
 
 Name: {contact.name}
-Email: {contact.email}
+Phone: {contact.phone}
 Subject: {contact.subject}
 
 Message:
@@ -352,36 +352,32 @@ Received at: {contact.created_at}
 # CONTACT FORM SUBMISSION
 # ==========================================
 
+
 @require_POST
 def submit_contact(request):
 
     name = request.POST.get('name', '').strip()
-    email = request.POST.get('email', '').strip()
+    phone = request.POST.get('phone', '').strip()
     subject = request.POST.get('subject', '').strip()
     message = request.POST.get('message', '').strip()
 
-    if not all([name, email, subject, message]):
-
+    if not all([name, phone, subject, message]):
         messages.error(
             request,
             'Please fill in all required fields.'
         )
-
         return redirect('contact')
 
     contact = ContactMessage.objects.create(
         name=name,
-        email=email,
+        phone=phone,
         subject=subject,
         message=message,
     )
 
     try:
-
         send_contact_notification(contact)
-
     except Exception as e:
-
         print("Email notification failed:", e)
 
     messages.success(
@@ -390,6 +386,7 @@ def submit_contact(request):
     )
 
     return redirect('contact')
+
 
 
 # ==========================================
