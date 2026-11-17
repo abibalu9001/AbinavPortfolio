@@ -1,7 +1,8 @@
 
+import os
+from functools import wraps
+
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.core.mail import send_mail
@@ -9,11 +10,8 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.core.cache import cache
-from portfolio.services.competitive import fetch_all_platforms
-import os
-from django.contrib.auth import logout
-from django.contrib.auth.decorators import user_passes_test
 
+from portfolio.services.competitive import fetch_all_platforms
 from .models import ContactMessage, ServiceRequest
 
 
@@ -22,47 +20,69 @@ from .models import ContactMessage, ServiceRequest
 # ==========================================
 
 def home(request):
-    return render(request, 'portfolio/index.html', {'active_page': 'home'})
+    return render(request, 'portfolio/index.html', {
+        'active_page': 'home'
+    })
 
 
 def description(request):
-    return render(request, 'portfolio/description.html', {'active_page': 'description'})
+    return render(request, 'portfolio/description.html', {
+        'active_page': 'description'
+    })
 
 
 def services(request):
-    return render(request, 'portfolio/services.html', {'active_page': 'services'})
+    return render(request, 'portfolio/services.html', {
+        'active_page': 'services'
+    })
 
 
 def projects(request):
-    return render(request, 'portfolio/projects.html', {'active_page': 'projects'})
+    return render(request, 'portfolio/projects.html', {
+        'active_page': 'projects'
+    })
 
 
 def experience(request):
-    return render(request, 'portfolio/experience.html', {'active_page': 'experience'})
+    return render(request, 'portfolio/experience.html', {
+        'active_page': 'experience'
+    })
 
 
 def education(request):
-    return render(request, 'portfolio/education.html', {'active_page': 'education'})
+    return render(request, 'portfolio/education.html', {
+        'active_page': 'education'
+    })
 
 
 def test_scores(request):
-    return render(request, 'portfolio/test_scores.html', {'active_page': 'test_scores'})
+    return render(request, 'portfolio/test_scores.html', {
+        'active_page': 'test_scores'
+    })
 
 
 def certifications(request):
-    return render(request, 'portfolio/certifications.html', {'active_page': 'certifications'})
+    return render(request, 'portfolio/certifications.html', {
+        'active_page': 'certifications'
+    })
 
 
 def languages(request):
-    return render(request, 'portfolio/languages.html', {'active_page': 'languages'})
+    return render(request, 'portfolio/languages.html', {
+        'active_page': 'languages'
+    })
 
 
 def skills(request):
-    return render(request, 'portfolio/skills.html', {'active_page': 'skills'})
+    return render(request, 'portfolio/skills.html', {
+        'active_page': 'skills'
+    })
 
 
 def hackathons(request):
-    return render(request, 'portfolio/hackathons.html', {'active_page': 'hackathons'})
+    return render(request, 'portfolio/hackathons.html', {
+        'active_page': 'hackathons'
+    })
 
 
 def competitive_programming(request):
@@ -84,18 +104,34 @@ def competitive_programming(request):
 
 
 def contact_page(request):
-    return render(request, 'portfolio/contact.html', {'active_page': 'contact'})
+    return render(request, 'portfolio/contact.html', {
+        'active_page': 'contact'
+    })
 
 
 # ==========================================
-# ADMIN LOGIN
+# DASHBOARD AUTHENTICATION
 # ==========================================
+
+def dashboard_required(view_func):
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+
+        if not request.session.get('dashboard_authenticated'):
+            return redirect('custom_login')
+
+        return view_func(request, *args, **kwargs)
+
+    return wrapper
 
 
 def custom_login(request):
 
     if request.method == 'GET':
+
+        # Clear any previous dashboard session
         request.session.flush()
+
         return render(request, 'portfolio/login.html')
 
     if request.method == 'POST':
@@ -106,42 +142,43 @@ def custom_login(request):
         correct_username = os.environ.get('DASHBOARD_USERNAME')
         correct_password = os.environ.get('DASHBOARD_PASSWORD')
 
+        # Check whether credentials are configured
         if not correct_username or not correct_password:
-            messages.error(request, 'Login is temporarily unavailable.')
+
+            messages.error(
+                request,
+                'Login is temporarily unavailable.'
+            )
+
             return render(request, 'portfolio/login.html')
 
+        # Validate credentials
         if (
             username == correct_username
             and password == correct_password
         ):
+
             request.session['dashboard_authenticated'] = True
+
+            # Session expires after 30 minutes
             request.session.set_expiry(1800)
 
             return redirect('contact_dashboard')
 
-        messages.error(request, 'Invalid username or password.')
+        messages.error(
+            request,
+            'Invalid username or password.'
+        )
 
     return render(request, 'portfolio/login.html')
-
 
 
 # ==========================================
 # COMBINED ADMIN DASHBOARD
 # ==========================================
-def dashboard_required(view_func):
-    def wrapper(request, *args, **kwargs):
-        if not request.session.get('dashboard_authenticated'):
-            return redirect('custom_login')
-        return view_func(request, *args, **kwargs)
-
-    return wrapper
 
 @dashboard_required
 def contact_dashboard(request):
-
-    if not request.user.is_staff or not request.user.is_active:
-        logout(request)
-        return redirect('custom_login')
 
     query = request.GET.get('q', '').strip()
 
@@ -152,6 +189,7 @@ def contact_dashboard(request):
     service_requests = ServiceRequest.objects.all()
 
     if query:
+
         contact_messages = contact_messages.filter(
             Q(name__icontains=query) |
             Q(email__icontains=query) |
@@ -167,15 +205,20 @@ def contact_dashboard(request):
         )
 
     # Separate pagination
-    message_page = Paginator(contact_messages, 10).get_page(
+    message_page = Paginator(
+        contact_messages, 10
+    ).get_page(
         request.GET.get('message_page')
     )
 
-    request_page = Paginator(service_requests, 10).get_page(
+    request_page = Paginator(
+        service_requests, 10
+    ).get_page(
         request.GET.get('request_page')
     )
 
     return render(request, 'portfolio/dashboard.html', {
+
         'contact_messages': message_page,
         'service_requests': request_page,
 
@@ -185,10 +228,17 @@ def contact_dashboard(request):
         'query': query,
 
         'total_messages': ContactMessage.objects.count(),
-        'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
+
+        'unread_messages': ContactMessage.objects.filter(
+            is_read=False
+        ).count(),
 
         'total_requests': ServiceRequest.objects.count(),
-        'unread_requests': ServiceRequest.objects.filter(is_read=False).count(),
+
+        'unread_requests': ServiceRequest.objects.filter(
+            is_read=False
+        ).count(),
+
     })
 
 
@@ -196,57 +246,73 @@ def contact_dashboard(request):
 # CONTACT MESSAGE DETAILS
 # ==========================================
 
-@login_required(login_url='custom_login')
+@dashboard_required
 def view_message(request, message_id):
 
-    if not request.user.is_staff or not request.user.is_active:
-        logout(request)
-        return redirect('custom_login')
-
-    contact = get_object_or_404(ContactMessage, pk=message_id)
+    contact = get_object_or_404(
+        ContactMessage,
+        pk=message_id
+    )
 
     if request.method == 'POST':
+
         contact.is_read = not contact.is_read
+
         contact.save(update_fields=['is_read'])
-        return redirect('view_message', message_id=contact.pk)
+
+        return redirect(
+            'view_message',
+            message_id=contact.pk
+        )
 
     if not contact.is_read:
+
         contact.is_read = True
+
         contact.save(update_fields=['is_read'])
 
-    return render(request, 'portfolio/message_detail.html', {
-        'contact': contact
-    })
+    return render(
+        request,
+        'portfolio/message_detail.html',
+        {
+            'contact': contact
+        }
+    )
 
 
 # ==========================================
 # DELETE CONTACT MESSAGE
 # ==========================================
 
-@login_required(login_url='custom_login')
+@dashboard_required
 @require_POST
 def delete_message(request, message_id):
 
-    if not request.user.is_staff or not request.user.is_active:
-        logout(request)
-        return redirect('custom_login')
+    contact = get_object_or_404(
+        ContactMessage,
+        pk=message_id
+    )
 
-    contact = get_object_or_404(ContactMessage, pk=message_id)
     contact.delete()
 
-    messages.success(request, 'Message deleted successfully!')
+    messages.success(
+        request,
+        'Message deleted successfully!'
+    )
 
     return redirect('contact_dashboard')
 
 
 # ==========================================
-# LOGOUT ENDPOINT (NOT DISPLAYED IN MENU)
+# LOGOUT ENDPOINT
 # ==========================================
 
 @dashboard_required
 @require_POST
 def custom_logout(request):
+
     request.session.flush()
+
     return redirect('custom_login')
 
 
@@ -275,7 +341,9 @@ Received at: {contact.created_at}
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[settings.CONTACT_NOTIFICATION_EMAIL],
+        recipient_list=[
+            settings.CONTACT_NOTIFICATION_EMAIL
+        ],
         fail_silently=False,
     )
 
@@ -293,7 +361,12 @@ def submit_contact(request):
     message = request.POST.get('message', '').strip()
 
     if not all([name, email, subject, message]):
-        messages.error(request, 'Please fill in all required fields.')
+
+        messages.error(
+            request,
+            'Please fill in all required fields.'
+        )
+
         return redirect('contact')
 
     contact = ContactMessage.objects.create(
@@ -304,11 +377,17 @@ def submit_contact(request):
     )
 
     try:
+
         send_contact_notification(contact)
+
     except Exception as e:
+
         print("Email notification failed:", e)
 
-    messages.success(request, 'Message sent successfully!')
+    messages.success(
+        request,
+        'Message sent successfully!'
+    )
 
     return redirect('contact')
 
@@ -317,49 +396,95 @@ def submit_contact(request):
 # SERVICE REQUEST SUBMISSION
 # ==========================================
 
-
 def submit_service_request(request):
+
     if request.method != 'POST':
         return redirect('services')
 
     name = request.POST.get('name', '').strip()
     phone = request.POST.get('phone', '').strip()
     email = request.POST.get('email', '').strip()
-    service_type = request.POST.get('service_type', '').strip()
-    description = request.POST.get('description', '').strip()
+
+    service_type = request.POST.get(
+        'service_type', ''
+    ).strip()
+
+    description = request.POST.get(
+        'description', ''
+    ).strip()
 
     preferred_language = request.POST.get(
         'preferred_language', 'none'
     ).strip()
 
-    country = request.POST.get('country', '').strip()
-    state_region = request.POST.get('state_region', '').strip()
-    district = request.POST.get('district', '').strip()
+    country = request.POST.get(
+        'country', ''
+    ).strip()
 
-    # Validate required fields.
+    state_region = request.POST.get(
+        'state_region', ''
+    ).strip()
+
+    district = request.POST.get(
+        'district', ''
+    ).strip()
+
+    # Validate required fields
     if not all([
-        name, phone, service_type, description,
-        country, state_region
+        name,
+        phone,
+        service_type,
+        description,
+        country,
+        state_region
     ]):
-        messages.error(request, 'Please complete all required fields.')
+
+        messages.error(
+            request,
+            'Please complete all required fields.'
+        )
+
         return redirect('services')
 
     valid_languages = {
-        'none', 'ta', 'en', 'hi', 'te', 'kn', 'ml'
+        'none',
+        'ta',
+        'en',
+        'hi',
+        'te',
+        'kn',
+        'ml'
     }
 
     if preferred_language not in valid_languages:
-        messages.error(request, 'Please select a valid language.')
+
+        messages.error(
+            request,
+            'Please select a valid language.'
+        )
+
         return redirect('services')
 
-    valid_services = dict(ServiceRequest.SERVICE_CHOICES)
+    valid_services = dict(
+        ServiceRequest.SERVICE_CHOICES
+    )
 
     if service_type not in valid_services:
-        messages.error(request, 'Please select a valid service.')
+
+        messages.error(
+            request,
+            'Please select a valid service.'
+        )
+
         return redirect('services')
 
     if country == 'India' and not district:
-        messages.error(request, 'Please select your district.')
+
+        messages.error(
+            request,
+            'Please select your district.'
+        )
+
         return redirect('services')
 
     if country != 'India':
