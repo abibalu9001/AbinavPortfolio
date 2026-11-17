@@ -219,7 +219,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # --------------------------------------------------
-# EMAIL CONFIGURATION - GMAIL SMTP
+# EMAIL CONFIGURATION - GMAIL SMTP SSL
 # --------------------------------------------------
 
 EMAIL_BACKEND = (
@@ -228,13 +228,17 @@ EMAIL_BACKEND = (
 
 EMAIL_HOST = "smtp.gmail.com"
 
-EMAIL_PORT = 587
+EMAIL_PORT = 465
 
-EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
 
-EMAIL_TIMEOUT = 20
+EMAIL_USE_TLS = False
 
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_TIMEOUT = 30
+
+EMAIL_HOST_USER = os.environ.get(
+    "EMAIL_HOST_USER", ""
+)
 
 EMAIL_HOST_PASSWORD = os.environ.get(
     "EMAIL_HOST_PASSWORD", ""
@@ -246,7 +250,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 CONTACT_NOTIFICATION_EMAIL = os.environ.get(
     "CONTACT_NOTIFICATION_EMAIL",
-    EMAIL_HOST_USER,
+    EMAIL_HOST_USER
 )
 
 
