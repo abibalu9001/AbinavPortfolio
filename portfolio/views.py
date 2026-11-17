@@ -4,11 +4,11 @@ from functools import wraps
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.core.cache import cache
+import requests
 
 from portfolio.services.competitive import fetch_all_platforms
 from .models import ContactMessage, ServiceRequest
@@ -209,70 +209,62 @@ def custom_logout(request):
 
 
 # ==========================================
-# EMAIL NOTIFICATION FUNCTIONS
+# TELEGRAM NOTIFICATION FUNCTIONS
 # ==========================================
 
-def send_portfolio_notification(subject, message):
-    """Send an email notification to the portfolio owner."""
-    recipient = settings.CONTACT_NOTIFICATION_EMAIL
-    sender = settings.DEFAULT_FROM_EMAIL
+def send_telegram_notification(text):
+    """Send a notification to the portfolio owner's Telegram chat."""
+    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
 
-    if not recipient or not sender or not settings.EMAIL_HOST_PASSWORD:
+    if not bot_token or not chat_id:
         raise ValueError(
-            "Email configuration is incomplete. Check "
-            "EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, and "
-            "CONTACT_NOTIFICATION_EMAIL."
+            "Telegram configuration is incomplete. Set "
+            "TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID."
         )
 
-    send_mail(
-        subject=subject,
-        message=message,
-        from_email=sender,
-        recipient_list=[recipient],
-        fail_silently=False,
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    response = requests.post(
+        url,
+        json={"chat_id": chat_id, "text": text},
+        timeout=15,
     )
+    response.raise_for_status()
+
+    result = response.json()
+    if not result.get("ok"):
+        raise RuntimeError(f"Telegram API rejected the message: {result}")
+
+    return result
 
 
 def send_contact_notification(contact):
-    subject = f"New Portfolio Message: {contact.subject}"
-    message = f"""
-You have received a new message through your portfolio.
-
-Name: {contact.name}
-Phone: {contact.phone}
-Subject: {contact.subject}
-
-Message:
-{contact.message}
-
-Received at: {contact.created_at}
-"""
-    send_portfolio_notification(subject, message)
+    text = (
+        "\U0001F4E8 NEW PORTFOLIO MESSAGE\n\n"
+        f"Name: {contact.name}\n"
+        f"Phone: {contact.phone}\n"
+        f"Subject: {contact.subject}\n\n"
+        f"Message:\n{contact.message}\n\n"
+        f"Received at: {contact.created_at}"
+    )
+    send_telegram_notification(text)
 
 
 def send_service_request_notification(service):
-    subject = f"New Service Request: {service.service_type}"
-    message = f"""
-You have received a new service request through your portfolio.
-
-Name: {service.name}
-Phone: {service.phone}
-Email: {service.email}
-
-Service: {service.service_type}
-
-Description:
-{service.description}
-
-Preferred Language: {service.preferred_language}
-
-Country: {service.country}
-State / Region: {service.state_region}
-District: {service.district}
-
-Received at: {service.created_at}
-"""
-    send_portfolio_notification(subject, message)
+    text = (
+        "\U0001F4CB NEW SERVICE REQUEST\n\n"
+        f"Name: {service.name}\n"
+        f"Phone: {service.phone}\n"
+        f"Email: {service.email or 'Not provided'}\n"
+        f"Service: {service.service_type}\n\n"
+        f"Description:\n{service.description}\n\n"
+        f"Preferred Language: {service.preferred_language}\n"
+        f"Country: {service.country}\n"
+        f"State / Region: {service.state_region}\n"
+        f"District: {service.district or 'Not provided'}\n\n"
+        f"Received at: {service.created_at}"
+    )
+    send_telegram_notification(text)
 
 
 # ==========================================
@@ -299,10 +291,10 @@ def submit_contact(request):
 
     try:
         send_contact_notification(contact)
-        print("Contact notification email sent successfully.")
+        print("Contact notification sent to Telegram successfully.")
     except Exception as e:
-        # Preserve the database record if email delivery fails.
-        print("Contact notification email failed:", repr(e))
+        # Keep the submitted message even if Telegram is temporarily unavailable.
+        print("Contact Telegram notification failed:", repr(e))
 
     messages.success(request, 'Message sent successfully!')
     return redirect('contact')
@@ -360,10 +352,10 @@ def submit_service_request(request):
 
     try:
         send_service_request_notification(service)
-        print("Service request notification email sent successfully.")
+        print("Service request notification sent to Telegram successfully.")
     except Exception as e:
-        # Preserve the database record if email delivery fails.
-        print("Service request notification email failed:", repr(e))
+        # Keep the service request even if Telegram is temporarily unavailable.
+        print("Service request Telegram notification failed:", repr(e))
 
     messages.success(
         request,
