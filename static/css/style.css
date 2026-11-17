@@ -7230,3 +7230,255 @@ body {
     background: #00c6d7;
     color: #081525;
 }
+
+/* =================================
+   WEBSITE VISITS & RATING SECTION
+================================= */
+
+.website-feedback {
+    padding: 65px 20px;
+    margin-top: 40px;
+    background: var(--card-bg, #f7f8fc);
+    text-align: center;
+}
+
+.feedback-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.visitor-stat,
+.rating-stat,
+.give-rating {
+    padding: 30px 20px;
+    border-radius: 18px;
+    background: var(--card-background, #ffffff);
+    border: 1px solid rgba(128, 128, 128, 0.18);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.visitor-stat:hover,
+.rating-stat:hover,
+.give-rating:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+}
+
+.feedback-icon {
+    font-size: 35px;
+}
+
+.visitor-stat h2,
+.rating-stat h2 {
+    font-size: 34px;
+    margin: 12px 0;
+    font-weight: 700;
+}
+
+.visitor-stat p,
+.rating-stat p,
+.give-rating p {
+    color: var(--text-secondary, #777);
+    margin: 7px 0;
+}
+
+.rating-stars {
+    margin-top: 12px;
+}
+
+.star {
+    color: #c9c9c9;
+    font-size: 25px;
+}
+
+.star.filled {
+    color: #f5b301;
+}
+
+.give-rating h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Interactive star selection */
+
+.star-selection {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 5px;
+    margin: 18px 0;
+}
+
+.star-selection input {
+    display: none;
+}
+
+.star-selection label {
+    font-size: 36px;
+    color: #c9c9c9;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.star-selection label:hover {
+    transform: scale(1.15);
+}
+
+.star-selection input:checked ~ label,
+.star-selection label:hover,
+.star-selection label:hover ~ label {
+    color: #f5b301;
+}
+
+.rating-submit {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 25px;
+    background: var(--primary-color, #2563eb);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.rating-submit:hover {
+    opacity: 0.85;
+    transform: scale(1.04);
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 768px) {
+    .feedback-container {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+    }
+
+    .website-feedback {
+        padding: 40px 15px;
+    }
+}
+
+/* Website feedback section - visibility fixes */
+
+
+
+.visitor-stat,
+.rating-stat,
+.give-rating {
+    background: #ffffff;
+    color: #172033;
+}
+
+.visitor-stat h2,
+.rating-stat h2,
+.give-rating h3 {
+    color: #172033 !important;
+}
+
+.visitor-stat p,
+.rating-stat p,
+.give-rating p {
+    color: #64748b !important;
+}
+
+.rating-stat .star {
+    color: #d1d5db;
+}
+
+.rating-stat .star.filled {
+    color: #f5b301;
+}
+
+.give-rating .star-selection label {
+    color: #d1d5db;
+}
+
+.give-rating .star-selection input:checked ~ label,
+.give-rating .star-selection label:hover,
+.give-rating .star-selection label:hover ~ label {
+    color: #f5b301;
+}
+
+.rating-submit {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    color: #ffffff;
+}
+
+.rating-submit:hover {
+    background: linear-gradient(135deg, #1d4ed8, #0284c7);
+}
+.website-feedback {
+    background: #f4f6fb !important;
+}
+.visitor-stat,
+.rating-stat,
+.give-rating {
+    background: #ffffff !important;
+    color: #172033;
+}
+section.website-feedback,
+.website-feedback#website-feedback {
+    background: linear-gradient(
+        110deg,
+        #06172a 0%,
+        #062b32 100%
+    ) !important;
+    background-color: #06172a !important;
+}
+
+/* Portfolio feedback - matching contact form theme */
+
+.website-feedback {
+    background: #101F33 !important;
+    padding: 65px 20px;
+}
+
+.visitor-stat,
+.rating-stat,
+.give-rating {
+    background: #101F33 !important;
+    border: 1px solid #2C4562;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+    color: #D5E0EE !important;
+}
+
+.visitor-stat h2,
+.rating-stat h2,
+.give-rating h3 {
+    color: #D5E0EE !important;
+}
+
+.visitor-stat p,
+.rating-stat p,
+.give-rating p {
+    color: #8295AD !important;
+}
+
+.rating-stat .star,
+.star-selection label {
+    color: #52647A;
+}
+
+.rating-stat .star.filled,
+.star-selection input:checked ~ label,
+.star-selection label:hover,
+.star-selection label:hover ~ label {
+    color: #F5B301;
+}
+
+.rating-submit {
+    background: #20B9D6 !important;
+    color: #061827 !important;
+    border: none;
+}
+
+.rating-submit:hover {
+    background: #18A9C5 !important;
+}
