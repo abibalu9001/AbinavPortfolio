@@ -1,3 +1,16 @@
 
+[project]
+name = "abinav-portfolio"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "Django==6.0.5",
+    "gunicorn",
+    "whitenoise",
+    "requests",
+    "dj-database-url",
+    "psycopg2-binary",
+]
+
 [tool.vercel.scripts]
 build = 'DATABASE_URL="$DATABASE_URL_UNPOOLED" python manage.py migrate --noinput'
